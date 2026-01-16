@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
+const images = [
+  "/src/assets/sih.jpeg",
+  "/src/assets/niti.jpeg",
+  "/src/assets/content.jpeg",
+];
+
 const About: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -9,6 +15,20 @@ const About: React.FC = () => {
   const [fullyRevealed, setFullyRevealed] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
+  const [imageIndex, setImageIndex] = useState(0);
+
+  // Rotate images every 3 seconds (after reveal)
+  useEffect(() => {
+    if (!fullyRevealed) return;
+
+    const interval = setInterval(() => {
+      setImageIndex((i) => (i + 1) % images.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [fullyRevealed]);
+
+  // Setup canvas
   useEffect(() => {
     const canvas = canvasRef.current!;
     const container = containerRef.current!;
@@ -18,7 +38,6 @@ const About: React.FC = () => {
       canvas.width = container.clientWidth;
       canvas.height = container.clientHeight;
 
-      // Fill with fog
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = "rgba(0,0,0,0.9)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -98,40 +117,38 @@ const About: React.FC = () => {
       onMouseLeave={handleUp}
       onMouseMove={handleMove}
     >
-      {/* COLOR CONTENT (BEHIND) */}
+      {/* CONTENT */}
       <div className="absolute inset-0 z-0 flex items-center justify-center px-10">
         <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
 
-          {/* Text */}
-          <div className="text-white space-y-4">
+          {/* TEXT */}
+          <div className="text-white space-y-6">
             <p className="text-sm uppercase tracking-widest opacity-70">
               A little more about me
             </p>
 
-            <h2 className="text-4xl md:text-6xl font-bold">
-              I won Smart India Hackathon 🏆
-            </h2>
+            <div className="space-y-4 text-lg text-zinc-300 max-w-xl">
+              <p>
+                I won Smart India Hackathon, one of India’s biggest national-level
+                hackathons.
+              </p>
 
-            <p className="max-w-xl text-lg">
-              I was part of the team that won{" "}
-              <span className="font-semibold">Smart India Hackathon</span>, one of
-              India’s biggest national-level hackathons. It was intense, chaotic,
-              and incredibly rewarding — building under pressure, solving real
-              problems, and learning what teamwork truly means.
-            </p>
+              <p>
+                I’ve worked with NITI Aayog, where I saw how technology meets
+                policy and real-world impact.
+              </p>
 
-            <p className="max-w-xl text-base opacity-90">
-              This experience changed how I look at technology — not just as
-              code, but as something that can genuinely impact real people and
-              real systems.
-            </p>
+              <p>
+                Outside of coding, I’m into public speaking and content creation.
+              </p>
+            </div>
           </div>
 
-          {/* Image */}
-          <div className="w-full h-[420px] rounded-3xl overflow-hidden shadow-2xl">
+          {/* IMAGE rotating */}
+          <div className="w-full h-2xl overflow-hidden shadow-2xl">
             <img
-              src="/src/assets/sih.jpeg"
-              alt="sih"
+              src={images[imageIndex]}
+              alt="proof"
               className="w-full h-full object-cover"
             />
           </div>
@@ -139,7 +156,7 @@ const About: React.FC = () => {
         </div>
       </div>
 
-      {/* BLUR LAYER (REMOVED AFTER REVEAL) */}
+      {/* BLUR LAYER */}
       {!fullyRevealed && (
         <div className="absolute inset-0 z-10 backdrop-blur-xl bg-black/60 pointer-events-none transition-opacity duration-700" />
       )}
@@ -152,7 +169,7 @@ const About: React.FC = () => {
         />
       )}
 
-      {/* INSTRUCTIONS (DISAPPEAR AFTER FIRST WIPE) */}
+      {/* INSTRUCTIONS */}
       <div
         className={`pointer-events-none absolute inset-0 z-30 flex items-center justify-center transition-opacity duration-700 ${
           hasStarted ? "opacity-0" : "opacity-100"
@@ -160,7 +177,7 @@ const About: React.FC = () => {
       >
         <div className="text-center">
           <p className="text-white text-3xl md:text-4xl font-light mb-2">
-            Wipe to reveal 
+            Wipe to reveal
           </p>
           <p className="text-zinc-400 text-sm">
             click & move your mouse
