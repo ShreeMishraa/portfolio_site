@@ -3,8 +3,7 @@ import "../index.css";
 import { motion, useScroll, useTransform } from "framer-motion";
 import NavbarIcons from "./NavbarIcons";
 import bgImage from "../assets/loaderbg.png";
-
-type Page = "home" | "about";
+import type { Page } from "../types";
 
 const LoaderScene: React.FC<{ onNavigate?: (to: Page) => void }> = ({ onNavigate }) => {
   const { scrollYProgress } = useScroll();
@@ -61,7 +60,7 @@ const LoaderScene: React.FC<{ onNavigate?: (to: Page) => void }> = ({ onNavigate
             y: [10, 0, 10],
             transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
           }}
-          className="fixed top-[18%] right-[30%] text-black text-center text-sm tracking-widest uppercase z-20 leading-tight"
+          className="fixed top-[18%] right-[29%] text-[#EC008C] text-center text-xs tracking-widest uppercase z-20 leading-tight"
         >
           <p>Scroll To</p>
           <p>Enter ↓</p>

@@ -10,9 +10,10 @@ import {
 import apple from "../assets/apple.png";
 import butterfly from "../assets/butterfly.png";
 import flower from "../assets/flower.png";
+import type { Page } from "../types";
 
 interface NavbarIconsProps {
-  onNavigate?: (to: "home" | "about") => void;
+  onNavigate?: (to: Page) => void;
   scrollYProgress: MotionValue<number>;
   entered?: boolean;
 }
@@ -29,7 +30,7 @@ const NavbarIcons: React.FC<NavbarIconsProps> = ({
   });
 
   // 🍎 Apple motion
-  const appleX = useTransform(scrollYProgress, [0, 0.4], [-160, 0]);
+  const appleX = useTransform(scrollYProgress, [0, 0.4], [-140, 0]);
   const appleY = useTransform(scrollYProgress, [0, 0.4], [-200, -120]);
   const appleScale = useTransform(scrollYProgress, [0, 0.4], [1, 1.1]);
 
@@ -45,27 +46,26 @@ const NavbarIcons: React.FC<NavbarIconsProps> = ({
   });
 
   // 🌸 Flower motion
-  const flowerX = useTransform(scrollYProgress, [0, 0.4], [140, 0]);
+  const flowerX = useTransform(scrollYProgress, [0, 0.4], [110, 0]);
   const flowerY = useTransform(scrollYProgress, [0, 0.4], [-200, 200]);
   const flowerScale = useTransform(scrollYProgress, [0, 0.4], [1, 1.1]);
 
   return (
     <div className="relative flex items-center justify-center w-full h-full">
-
       {/* 🍎 Apple */}
       <motion.div
         style={{ x: appleX, y: appleY, scale: appleScale }}
         className="absolute flex flex-col items-center"
-        onClick={() => onNavigate?.("home")}
+        onClick={() => onNavigate?.("tech")}
       >
         <img
           src={apple}
-          alt="WORK"
-          className="w-32 h-24 md:w-32 md:h-24 hover:scale-110 transition-transform duration-300"
+          alt="TECH"
+          className="w-24 h-20 md:w-24 md:h-20 hover:scale-110 transition-transform duration-300"
         />
         {entered && (
           <span className="text-xs mt-2 uppercase tracking-widest text-white">
-            Work
+            Tech
           </span>
         )}
       </motion.div>
@@ -74,15 +74,16 @@ const NavbarIcons: React.FC<NavbarIconsProps> = ({
       <motion.div
         style={{ x: butterflyX, y: butterflyY, scale: butterflyScale }}
         className="absolute flex flex-col items-center"
+        onClick={() => onNavigate?.("work")}
       >
         <img
           src={butterfly}
-          alt="TECH"
-          className="w-36 h-20 md:w-36 md:h-24 hover:scale-110 transition-transform duration-300"
+          alt="WORK"
+          className="w-28 h-20 md:w-28 md:h-20 hover:scale-110 transition-transform duration-300"
         />
         {entered && (
           <span className="text-xs mt-2 uppercase tracking-widest text-white">
-            Tech
+            Work
           </span>
         )}
       </motion.div>
@@ -96,7 +97,7 @@ const NavbarIcons: React.FC<NavbarIconsProps> = ({
         <img
           src={flower}
           alt="ABOUT"
-          className="w-20 h-20 md:w-24 md:h-24 hover:scale-110 transition-transform duration-300"
+          className="w-20 h-20 md:w-20 md:h-20 hover:scale-110 transition-transform duration-300"
         />
         {entered && (
           <span className="text-xs mt-2 uppercase tracking-widest text-white">
