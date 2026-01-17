@@ -57,10 +57,10 @@ const Home: React.FC<HomeProps> = ({ section }) => {
   }, [section]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+    <div className="min-h-screen text-white overflow-x-hidden">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full bg-black/50 backdrop-blur-sm z-50">
-        <div className="flex justify-end space-x-4 py-2 pr-4">
+      <nav className="fixed top-0 w-full bg-[#16161A]/50 backdrop-blur-sm z-50">
+        <div className="flex justify-end space-x-4 pr-4 py-3">
           {sections.map(({ id, label }) => (
             <button
               key={id}
@@ -76,7 +76,7 @@ const Home: React.FC<HomeProps> = ({ section }) => {
       </nav>
 
       {/* Sections */}
-      <div className="pt-20">
+      <div className="pt-10">
         <section ref={techRef} id="tech">
           <Tech />
         </section>

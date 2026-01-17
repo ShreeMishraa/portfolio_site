@@ -111,7 +111,7 @@ const About: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen w-full overflow-hidden bg-black"
+      className="relative min-h-screen w-full overflow-hidden"
       onMouseDown={handleDown}
       onMouseUp={handleUp}
       onMouseLeave={handleUp}
@@ -158,7 +158,7 @@ const About: React.FC = () => {
 
       {/* BLUR LAYER */}
       {!fullyRevealed && (
-        <div className="absolute inset-0 z-10 backdrop-blur-xl bg-black/60 pointer-events-none transition-opacity duration-700" />
+        <div className="absolute inset-0 z-10 backdrop-blur-xl pointer-events-none transition-opacity duration-700" />
       )}
 
       {/* FOG CANVAS */}

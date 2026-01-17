@@ -77,7 +77,7 @@ const SkillsCloud = () => {
 // ============ MAIN TECH COMPONENT ============
 const Tech = () => {
   return (
-    <section className="relative min-h-screen bg-background overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
 
       {/* Hero Section */}
       <div className="relative z-10 w-full h-full grid lg:grid-cols-2">
@@ -134,7 +134,7 @@ const Tech = () => {
           className="w-full h-screen"
         >
           <img
-            src="/src/assets/mishree.jpeg"
+            src="/src/assets/mishree.png"
             alt="Your portrait"
             className="w-full h-full object-cover"
           />
@@ -169,7 +169,7 @@ const Tech = () => {
 
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-background to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-transparent to-transparent pointer-events-none" />
     </section>
   );
 };
