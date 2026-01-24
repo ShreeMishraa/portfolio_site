@@ -78,7 +78,7 @@ const Home: React.FC<HomeProps> = ({ section }) => {
       </nav>
 
       {/* Sections */}
-      <div className="pt-10">
+      <div className="pt-0">
         <section ref={techRef} id="tech">
           <Tech />
         </section>

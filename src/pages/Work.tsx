@@ -59,7 +59,7 @@ export default function WorksSection() {
     <section className="w-full h-screen bg-[#1a1a1a]/90 overflow-hidden flex flex-col items-center justify-center">
 
       {/* WHITE CONTAINER */}
-      <div className="relative w-[92%] h-[760px] bg-black flex items-center justify-center overflow-hidden rounded-[36px]">
+      <div className="relative w-[92%] h-[760px] bg-white/90 flex items-center justify-center overflow-hidden rounded-[36px]">
         {/* Static Fan */}
         <div className="flex items-center justify-center">
           {worksData.map((work, index) => {

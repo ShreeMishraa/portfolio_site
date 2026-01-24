@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useTransform, animate, useScroll, useTransform as useScrollTransform } from "framer-motion";
 
 // ============ SKILLS CLOUD ============
 // ⚠️ DO NOT TOUCH THIS PART (UNCHANGED)
@@ -46,7 +46,7 @@ const sizeClasses = {
 
 const SkillsCloud = () => {
   return (
-    <div className="relative w-3xl max-w-3xl mx-auto py-10 scale-90">
+    <div className="relative w-3xl max-w-3xl mx-auto scale-90">
       <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 px-8">
         {skills.map((skill, index) => (
           <motion.span
@@ -66,117 +66,241 @@ const SkillsCloud = () => {
   );
 };
 
+// ============ HAND IMAGE COMPONENT ============
+const HandCursor = () => {
+  return (
+    <motion.img
+      src="/src/assets/hand.png"
+      alt="hand"
+      className="w-14 h-14 select-none"
+      animate={{ rotate: [0, 18, -10, 18, -10, 0] }}
+      transition={{
+        duration: 1.2,
+        repeat: Infinity,
+        repeatDelay: 1.5,
+        ease: "easeInOut",
+      }}
+      style={{ originX: 0.2, originY: 0.8 }}
+    />
+  );
+};
+
+// ============ MOUSE FOLLOWER (FIXED TO ONLY TRACK ITS OWN DIV) ============
+const MouseFollower = ({ children, speed = 0.05 }: { children: React.ReactNode; speed?: number }) => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      setMousePosition({
+        x: (e.clientX - centerX) * speed,
+        y: (e.clientY - centerY) * speed,
+      });
+    };
+
+    const handleMouseLeave = () => {
+      setMousePosition({ x: 0, y: 0 });
+    };
+
+    el.addEventListener("mousemove", handleMouseMove);
+    el.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      el.removeEventListener("mousemove", handleMouseMove);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [speed]);
+
+  useEffect(() => {
+    let raf: number;
+
+    const animateLoop = () => {
+      setPosition((prev) => ({
+        x: prev.x + (mousePosition.x - prev.x) * 0.1,
+        y: prev.y + (mousePosition.y - prev.y) * 0.1,
+      }));
+      raf = requestAnimationFrame(animateLoop);
+    };
+
+    raf = requestAnimationFrame(animateLoop);
+    return () => cancelAnimationFrame(raf);
+  }, [mousePosition]);
+
+  return (
+    <div ref={containerRef} className="relative w-full h-full flex items-center justify-center">
+      <div
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          transition: "transform 0.1s ease-out",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+
 // ============ MAIN TECH COMPONENT ============
 const Tech = () => {
   const [isRevealed, setIsRevealed] = useState(false);
+  const heroRef = useRef(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroRotateX = useScrollTransform(scrollYProgress, [0, 1], [0, -25]);
+  const heroScale = useScrollTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
   const dragDistance = useTransform([x, y], ([lx, ly]) => {
     return Math.sqrt((lx as number) ** 2 + (ly as number) ** 2);
   });
 
-  const handleDrag = () => {
-    if (dragDistance.get() > 80 && !isRevealed) {
-      setIsRevealed(true);
-    }
-  };
+  const handleDrag = () => {};
 
   const handleDragEnd = () => {
-    if (!isRevealed) {
+    if (dragDistance.get() > 80 && !isRevealed) {
+      setIsRevealed(true);
+      setTimeout(() => setIsRevealed(false), 3000);
+    } else if (!isRevealed) {
       animate(x, 0, { type: "spring", stiffness: 500, damping: 30 });
       animate(y, 0, { type: "spring", stiffness: 500, damping: 30 });
     }
   };
 
+  const handleEmailClick = () => {
+    window.open("/src/assets/resume.pdf", "_blank");
+  };
+
+  const nameLetters = ["S", "H", "R", "E", "E", " ", " ", "M", "I", "S", "H", "R", "A"];
+
   return (
-    <section className="relative min-h-screen overflow-hidden font-sans">
+    <section className="relative font-sans">
 
-      {/* ================= HERO SECTION ================= */}
-      <div className="min-h-screen flex items-center justify-center relative">
+      {/* ================= HERO ================= */}
+      <motion.div
+        ref={heroRef}
+        className="fixed top-0 left-0 w-full h-screen flex items-center justify-center bg-cover bg-center"
+        style={{ backgroundImage: "url('/src/assets/hero-bg.jpg')" } as any}
+      >
+        <div className="absolute inset-0 bg-black/40" />
 
-        <div className="relative">
+        <div className="relative z-10">
+          {!isRevealed && (
+            <div className="flex items-end justify-center relative">
+              {nameLetters.map((letter, i) => {
+                const isLastA = letter === "A" && i === nameLetters.length - 1;
+                const isSpace = letter === " ";
 
-          {/* NAME STATE */}
+                return (
+                  <motion.span
+                    key={i}
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white select-none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.08 * i, duration: 0.1 }}
+                    style={{
+                      display: "inline-block",
+                      transform: isLastA ? "translateY(15px)" : "translateY(0)",
+                    }}
+                  >
+                    {isSpace ? (
+                      "\u00A0"
+                    ) : isLastA ? (
+                      <motion.span
+                        style={{ x, y, display: "inline-block" }}
+                        drag
+                        dragElastic={0.1}
+                        dragMomentum={false}
+                        onDrag={handleDrag}
+                        onDragEnd={handleDragEnd}
+                        className="cursor-grab active:cursor-grabbing"
+                      >
+                        {letter}
+                      </motion.span>
+                    ) : (
+                      letter
+                    )}
+                  </motion.span>
+                );
+              })}
+
+              <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
+                <p className="text-white/70 text-sm whitespace-nowrap">Drag "A" anywhere →</p>
+              </div>
+            </div>
+          )}
+
+          {isRevealed && (
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">HI</span>
+              <HandCursor />
+              <span className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">HELLO</span>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      <div className="h-screen" />
+
+      {/* ================= SKILLS ================= */}
+     <div
+  className="relative z-20 w-full px-6 py-28 flex items-stretch justify-between gap-8 overflow-hidden"
+  style={{ backgroundImage: "url('/src/assets/hero-bg.jpg')" }}
+>  <div className="absolute inset-0 bg-black/40" />
+
+        {/* LEFT */}
+        <div className="w-[30%] flex items-center justify-center h-[24rem]">
           <motion.div
-            className="flex items-end justify-center relative"
-            animate={{ opacity: isRevealed ? 0 : 1, y: isRevealed ? -40 : 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            onClick={handleEmailClick}
+            className="w-[320px] h-full rounded-3xl bg-white/90 backdrop-blur-md border border-white/20
+                       flex flex-col items-center justify-center cursor-pointer shadow-2xl"
           >
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white select-none">
-              SHREE MISHR
-            </h1>
+            <div className="mb-4 text-sm text-zinc-700 bg-zinc-200/70 px-4 py-2 rounded-full">
+              click to see my resume
+            </div>
 
-            {/* DRAGGABLE A */}
-            <motion.span
-              className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white cursor-grab active:cursor-grabbing select-none absolute -right-10 md:-right-14"
-              style={{ x, y, top: "62%" }}
-              drag
-              dragElastic={0.1}
-              dragMomentum={false}
-              onDrag={handleDrag}
-              onDragEnd={handleDragEnd}
-            >
-              A
-            </motion.span>
+            <MouseFollower speed={0.08}>
+              <img src="/src/assets/resume.png" alt="envelope" className="w-12 h-12 object-contain" />
+            </MouseFollower>
           </motion.div>
+        </div>
 
-          {/* REVEAL STATE */}
+        {/* RIGHT */}
+        <div className="w-[70%] relative flex items-center justify-center h-[24rem]">
+          <SkillsCloud />
+
           <motion.div
-            className="absolute inset-0 flex items-center justify-center gap-10"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: isRevealed ? 1 : 0, scale: isRevealed ? 1 : 0.95 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            drag
+            dragElastic={0.18}
+            dragMomentum={true}
+            whileDrag={{ scale: 1.02 }}
+            className="absolute z-10 w-[700px] h-full md:w-[800px]
+                       rounded-3xl bg-white/80 backdrop-blur-md border border-white/20
+                       flex flex-col items-center justify-center cursor-grab active:cursor-grabbing shadow-2xl"
           >
-            {/* HI */}
-            <span className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white">
-              HI
-            </span>
+            <div className="mb-6 text-sm text-zinc-700 bg-zinc-200/70 px-4 py-2 rounded-full">
+              Drag to see my skills
+            </div>
 
-            {/* HAND CURSOR (ANIMATED) */}
-            <motion.img
-              src="/src/assets/hand.png"  // 👈 replace with your actual file if needed
-              alt="hand cursor"
-              className="w-10 md:w-12 lg:w-14 select-none pointer-events-none"
-              animate={{
-                rotate: [0, 20, -10, 20, -10, 0],
-              }}
-              transition={{
-                duration: 1.2,
-                repeat: Infinity,
-                repeatDelay: 1.5,
-                ease: "easeInOut",
-              }}
-            />
-
-            {/* HELLO */}
-            <span className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white">
-              HELLO
-            </span>
+            <MouseFollower speed={0.05}>
+              <img src="/src/assets/closed-hand.png" alt="cursor hand" className="w-12 h-12 object-contain" />
+            </MouseFollower>
           </motion.div>
-
         </div>
       </div>
-
-      {/* ================= SKILLS SECTION (UNCHANGED) ================= */}
-      <div className="relative z-10 w-full px-6 py-28 flex items-center justify-center overflow-hidden">
-        <SkillsCloud />
-
-        <motion.div
-          drag
-          dragElastic={0.18}
-          dragMomentum={true}
-          whileDrag={{ scale: 1.02 }}
-          className="absolute z-10 w-[420px] h-[260px] md:w-[560px] md:h-[340px]
-                     rounded-3xl bg-zinc-900/90 backdrop-blur-md border border-white/10
-                     flex flex-col items-center justify-center cursor-grab active:cursor-grabbing shadow-2xl"
-        >
-          <p className="text-white text-xl font-medium mb-2">Drag me around</p>
-          <p className="text-zinc-400 text-sm">and discover my skills</p>
-        </motion.div>
-      </div>
-
     </section>
   );
 };
