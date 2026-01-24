@@ -30,7 +30,7 @@ const Home: React.FC<HomeProps> = ({ section }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY + window.innerHeight / 2; // middle of viewport
+      const scrollY = window.scrollY + window.innerHeight / 2;
       let current: Section | null = null;
       sections.forEach(({ id, ref }) => {
         if (ref.current) {
@@ -46,7 +46,7 @@ const Home: React.FC<HomeProps> = ({ section }) => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // initial check
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -58,15 +58,17 @@ const Home: React.FC<HomeProps> = ({ section }) => {
 
   return (
     <div className="min-h-screen text-white overflow-x-hidden">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full bg-[#16161A]/50 backdrop-blur-sm z-50">
-        <div className="flex justify-end space-x-4 pr-4 py-3">
+      {/* Navbar - Fixed at bottom center */}
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <div className="flex items-center bg-[#1a1a1a]/90 backdrop-blur-md rounded-full px-2 py-2 shadow-lg">
           {sections.map(({ id, label }) => (
             <button
               key={id}
               onClick={() => handleSectionClick(id as Section)}
-              className={`px-2 py-1 text-xs rounded transition-colors ${
-                activeSection === id ? "bg-white text-black" : "text-white hover:bg-white/20"
+              className={`px-6 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                activeSection === id 
+                  ? "bg-white text-[#1a1a1a] shadow-md" 
+                  : "text-white/80 hover:text-white hover:bg-white/10"
               }`}
             >
               {label}

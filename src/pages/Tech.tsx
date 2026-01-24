@@ -1,7 +1,8 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 // ============ SKILLS CLOUD ============
+// ⚠️ DO NOT TOUCH THIS PART (UNCHANGED)
 interface Skill {
   name: string;
   size: "sm" | "md" | "xl" | "2xl" | "lg";
@@ -35,7 +36,6 @@ const skills: Skill[] = [
   { name: "GraphQL", size: "xl" },
 ];
 
-// Slightly reduced cloud sizes
 const sizeClasses = {
   sm: "text-[8px] opacity-60",
   md: "text-xs opacity-70",
@@ -51,19 +51,11 @@ const SkillsCloud = () => {
         {skills.map((skill, index) => (
           <motion.span
             key={skill.name}
-            className={`text-foreground ${sizeClasses[skill.size]} 
-              transition-all duration-300 hover:text-primary hover:opacity-100 cursor-default select-none`}
-            style={{
-              transform: `translateY(${(index % 4) * 5}px)`,
-            }}
+            className={`text-foreground ${sizeClasses[skill.size]}`}
+            style={{ transform: `translateY(${(index % 4) * 5}px)` }}
             initial={{ opacity: 0, scale: 0.6 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.5,
-              delay: index * 0.03,
-              type: "spring",
-              stiffness: 80,
-            }}
+            transition={{ duration: 0.5, delay: index * 0.03, type: "spring", stiffness: 80 }}
             whileHover={{ scale: 1.1 }}
           >
             {skill.name}
@@ -76,80 +68,101 @@ const SkillsCloud = () => {
 
 // ============ MAIN TECH COMPONENT ============
 const Tech = () => {
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const dragDistance = useTransform([x, y], ([lx, ly]) => {
+    return Math.sqrt((lx as number) ** 2 + (ly as number) ** 2);
+  });
+
+  const handleDrag = () => {
+    if (dragDistance.get() > 80 && !isRevealed) {
+      setIsRevealed(true);
+    }
+  };
+
+  const handleDragEnd = () => {
+    if (!isRevealed) {
+      animate(x, 0, { type: "spring", stiffness: 500, damping: 30 });
+      animate(y, 0, { type: "spring", stiffness: 500, damping: 30 });
+    }
+  };
+
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden font-sans">
 
-      {/* Hero Section */}
-      <div className="relative z-10 w-full h-full grid lg:grid-cols-2">
+      {/* ================= HERO SECTION ================= */}
+      <div className="min-h-screen flex items-center justify-center relative">
 
-        {/* Text Side */}
-        <div className="flex items-center lg:px-24">
+        <div className="relative">
+
+          {/* NAME STATE */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-xl"
+            className="flex items-end justify-center relative"
+            animate={{ opacity: isRevealed ? 0 : 1, y: isRevealed ? -40 : 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <p className="text-zinc-400 text-sm tracking-widest uppercase mb-4">
-              hello I'm
-            </p>
-
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-6xl leading-none mb-6">
-              <span className="text-white">Shree Mishra</span>
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white select-none">
+              SHREE MISHR
             </h1>
 
-            <div className="space-y-5 text-zinc-400 text-sm leading-relaxed max-w-md">
-              <p>
-                A CS undergrad currently based in Patiala, I’m in my pre-final year
-                at Thapar Institute of Engineering & Technology.
-              </p>
-
-              <p>
-                I’m deeply interested in frontend, creative development, and the
-                way visuals, motion, and small details can change how something
-                feels.
-              </p>
-
-              <p>
-                Outside of coding, I’m into public speaking and content creation. I
-  love expressing ideas and stories in ways that connect with people.
-              </p>
-            </div>
-
-            <motion.button
-              className="mt-10 px-6 py-3 rounded-lg border border-foreground/30 text-foreground text-sm font-medium hover:bg-foreground hover:text-background transition-all duration-300"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            {/* DRAGGABLE A */}
+            <motion.span
+              className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white cursor-grab active:cursor-grabbing select-none absolute -right-10 md:-right-14"
+              style={{ x, y, top: "62%" }}
+              drag
+              dragElastic={0.1}
+              dragMomentum={false}
+              onDrag={handleDrag}
+              onDragEnd={handleDragEnd}
             >
-              Scroll to know more!
-            </motion.button>
+              A
+            </motion.span>
           </motion.div>
-        </div>
 
-        {/* Image Side */}
-        <motion.div
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="w-full h-screen"
-        >
-          <img
-            src="/src/assets/mishree.png"
-            alt="Your portrait"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+          {/* REVEAL STATE */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center gap-10"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: isRevealed ? 1 : 0, scale: isRevealed ? 1 : 0.95 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            {/* HI */}
+            <span className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white">
+              HI
+            </span>
+
+            {/* HAND CURSOR (ANIMATED) */}
+            <motion.img
+              src="/src/assets/hand.png"  // 👈 replace with your actual file if needed
+              alt="hand cursor"
+              className="w-10 md:w-12 lg:w-14 select-none pointer-events-none"
+              animate={{
+                rotate: [0, 20, -10, 20, -10, 0],
+              }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                repeatDelay: 1.5,
+                ease: "easeInOut",
+              }}
+            />
+
+            {/* HELLO */}
+            <span className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white">
+              HELLO
+            </span>
+          </motion.div>
+
+        </div>
       </div>
 
-      {/* Skills Section */}
+      {/* ================= SKILLS SECTION (UNCHANGED) ================= */}
       <div className="relative z-10 w-full px-6 py-28 flex items-center justify-center overflow-hidden">
+        <SkillsCloud />
 
-        {/* Skills Cloud */}
-        <div className="relative z-0">
-          <SkillsCloud />
-        </div>
-
-        {/* Big Draggable Cover */}
         <motion.div
           drag
           dragElastic={0.18}
@@ -159,17 +172,11 @@ const Tech = () => {
                      rounded-3xl bg-zinc-900/90 backdrop-blur-md border border-white/10
                      flex flex-col items-center justify-center cursor-grab active:cursor-grabbing shadow-2xl"
         >
-          <p className="text-white text-xl font-medium mb-2">
-            Drag me around
-          </p>
-          <p className="text-zinc-400 text-sm">
-            and discover my skills
-          </p>
+          <p className="text-white text-xl font-medium mb-2">Drag me around</p>
+          <p className="text-zinc-400 text-sm">and discover my skills</p>
         </motion.div>
-
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-transparent to-transparent pointer-events-none" />
     </section>
   );
 };

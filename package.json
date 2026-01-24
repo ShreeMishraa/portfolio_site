@@ -10,12 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@tailwindcss/vite": "^4.1.17",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.562.0",
     "react": "^19.1.1",
     "react-confetti": "^6.4.0",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-slick": "^0.31.0",
+    "slick-carousel": "^1.8.1",
+    "three": "^0.182.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
