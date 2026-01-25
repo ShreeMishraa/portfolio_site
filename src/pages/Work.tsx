@@ -56,90 +56,101 @@ export default function WorksSection() {
   }, [hoveredIndex]);
 
   return (
-    <section className="w-full h-screen bg-[#1a1a1a]/90 overflow-hidden flex flex-col items-center justify-center">
+    <section className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+      
+      {/* BACKGROUND COLOR */}
+      <div className="absolute inset-0 bg-[#487078]" />
 
-      {/* WHITE CONTAINER */}
-      <div className="relative w-[92%] h-[760px] bg-white/90 flex items-center justify-center overflow-hidden rounded-[36px]">
-        {/* Static Fan */}
-        <div className="flex items-center justify-center">
-          {worksData.map((work, index) => {
-            const isHovered = hoveredIndex === index;
-            const isExpanded = isHovered && scrollProgress > 15;
+      {/* DARK OVERLAY */}
+      <div className="absolute inset-0 bg-black/20" />
 
-            let rotateZ = index % 2 === 0 ? -7 : 7;
-            if (index === Math.floor(worksData.length / 2)) rotateZ = 0;
-            if (isHovered) rotateZ = 0;
+      {/* CONTENT */}
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
 
-            const scale = isHovered ? 1.12 + scrollProgress * 0.002 : 1;
+        {/* WHITE CONTAINER */}
+        <div className="relative w-[92%] h-[760px] bg-white/90 flex items-center justify-center overflow-hidden rounded-[36px]">
+          
+          {/* Static Fan */}
+          <div className="flex items-center justify-center">
+            {worksData.map((work, index) => {
+              const isHovered = hoveredIndex === index;
+              const isExpanded = isHovered && scrollProgress > 15;
 
-            return (
-              <div
-              
-                key={work.id}
-                className="relative flex-shrink-0"
-                style={{
-                  width: CARD_W,
-                  marginLeft: index === 0 ? 0 : -OVERLAP,
-                  transform: `rotate(${rotateZ}deg) scale(${scale})`,
-                  transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-                  zIndex: isHovered ? 100 : 10 + index,
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
+              let rotateZ = index % 2 === 0 ? -7 : 7;
+              if (index === Math.floor(worksData.length / 2)) rotateZ = 0;
+              if (isHovered) rotateZ = 0;
+
+              const scale = isHovered ? 1.12 + scrollProgress * 0.002 : 1;
+
+              return (
                 <div
-                  className="w-full rounded-[28px] shadow-2xl overflow-hidden cursor-pointer bg-black"
+                  key={work.id}
+                  className="relative flex-shrink-0"
                   style={{
-                    height: isExpanded ? H_CARD_OPEN : H_CARD,
-                    transition: "height 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                    width: CARD_W,
+                    marginLeft: index === 0 ? 0 : -OVERLAP,
+                    transform: `rotate(${rotateZ}deg) scale(${scale})`,
+                    transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+                    zIndex: isHovered ? 100 : 10 + index,
                   }}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  <div className="absolute top-10 w-full text-center text-white/40 text-xs tracking-widest uppercase pointer-events-none z-50">
-        Hover the card & scroll to open
-      </div>
+                  <div
+                    className="w-full rounded-[28px] shadow-2xl overflow-hidden cursor-pointer bg-[#487078]"
+                    style={{
+                      height: isExpanded ? H_CARD_OPEN : H_CARD,
+                      transition: "height 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
+                  >
+                    <div className="absolute top-10 w-full text-center text-white/40 text-xs tracking-widest uppercase pointer-events-none z-50">
+                      Hover the card & scroll to open
+                    </div>
 
-                  {/* IMAGE */}
-                  <div className="relative w-full h-full">
-                    <img
-                      src={work.image}
-                      alt={work.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
+                    {/* IMAGE */}
+                    <div className="relative w-full h-full">
+                      <img
+                        src={work.image}
+                        alt={work.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
 
-                    {/* GRADIENT */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      {/* GRADIENT */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-                    {/* CLOSED TITLE */}
-                    {!isExpanded && (
-                      <div className="absolute bottom-6 left-6 right-6">
-                        <h3 className="text-white text-xl font-light tracking-wide">
-                          {work.title}
-                        </h3>
-                      </div>
-                    )}
-
-                    {/* OPEN STATE */}
-                    {isExpanded && (
-                      <div className="absolute inset-0 bg-black/92 p-8 flex flex-col">
-                        <div className="text-[10px] uppercase tracking-widest text-zinc-400">
-                          {work.technique} • {work.year}
+                      {/* CLOSED TITLE */}
+                      {!isExpanded && (
+                        <div className="absolute bottom-6 left-6 right-6">
+                          <h3 className="text-white text-xl font-light tracking-wide">
+                            {work.title}
+                          </h3>
                         </div>
-                        <h2 className="text-white text-2xl mt-3 font-light">
-                          {work.title}
-                        </h2>
-                        <p className="text-zinc-400 text-sm mt-3 leading-relaxed flex-1">
-                          {work.description}
-                        </p>
-                        <button className="mt-4 px-6 py-3 bg-white text-black text-xs uppercase tracking-wider rounded-lg hover:bg-zinc-200 transition-colors">
-                          View Project →
-                        </button>
-                      </div>
-                    )}
+                      )}
+
+                      {/* OPEN STATE */}
+                      {isExpanded && (
+                        <div className="absolute inset-0 bg-black/92 p-8 flex flex-col">
+                          <div className="text-[10px] uppercase tracking-widest text-zinc-400">
+                            {work.technique} • {work.year}
+                          </div>
+                          <h2 className="text-white text-2xl mt-3 font-light">
+                            {work.title}
+                          </h2>
+                          <p className="text-zinc-400 text-sm mt-3 leading-relaxed flex-1">
+                            {work.description}
+                          </p>
+                          <button className="mt-4 px-6 py-3 bg-white text-black text-xs uppercase tracking-wider rounded-lg hover:bg-zinc-200 transition-colors">
+                            View Project →
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
         </div>
       </div>
     </section>

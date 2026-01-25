@@ -238,7 +238,7 @@ const Tech = () => {
               })}
 
               <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
-                <p className="text-white/70 text-sm whitespace-nowrap">Drag "A" anywhere →</p>
+                <p className="text-white/70 text-xs whitespace-nowrap">drag "A" anywhere on screen →</p>
               </div>
             </div>
           )}
@@ -257,12 +257,11 @@ const Tech = () => {
 
       {/* ================= SKILLS ================= */}
      <div
-  className="relative z-20 w-full px-6 py-28 flex items-stretch justify-between gap-8 overflow-hidden"
-  style={{ backgroundImage: "url('/src/assets/hero-bg.jpg')" }}
->  <div className="absolute inset-0 bg-black/40" />
+  className="relative z-20 w-full px-6 py-28 flex items-stretch justify-between gap-8 bg-[#487078] overflow-hidden" 
+>  <div className="absolute inset-0 bg-black/20" />
 
         {/* LEFT */}
-        <div className="w-[30%] flex items-center justify-center h-[24rem]">
+        <div className="w-[30%] flex items-center justify-center h-80">
           <motion.div
             onClick={handleEmailClick}
             className="w-[320px] h-full rounded-3xl bg-white/90 backdrop-blur-md border border-white/20
@@ -279,7 +278,7 @@ const Tech = () => {
         </div>
 
         {/* RIGHT */}
-        <div className="w-[70%] relative flex items-center justify-center h-[24rem]">
+        <div className="w-[70%] relative flex items-center justify-center h-80">
           <SkillsCloud />
 
           <motion.div
