@@ -18,8 +18,60 @@
 
 /* Smooth global transitions */
 * {
-  transition: 
+  transition:
     background-color 1200ms ease,
     color 1200ms ease,
     border-color 1200ms ease;
+
+  cursor: none; /* hide default cursor */
+}
+
+/* ---------- ROUND CURSOR ---------- */
+
+.custom-cursor {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+/* ---------- DRAG CURSORS ---------- */
+
+*[draggable="true"],
+*[draggable="false"] {
+  cursor: grab;
+}
+
+*[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+/* ---------- BEAUTIFUL SCROLLBAR ---------- */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.35);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.45);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.35) transparent;
 }

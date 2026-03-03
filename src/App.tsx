@@ -22,6 +22,21 @@ const App: React.FC = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [hasScrolled]);
 
+  // 🎯 Custom round cursor
+  useEffect(() => {
+    const cursor = document.querySelector(".custom-cursor") as HTMLElement;
+
+    const moveCursor = (e: MouseEvent) => {
+      if (cursor) {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+      }
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    return () => window.removeEventListener("mousemove", moveCursor);
+  }, []);
+
   const handleNavigate = (to: Page) => {
     if (to === "work" || to === "tech" || to === "about") {
       setPage("home");
@@ -44,6 +59,9 @@ const App: React.FC = () => {
         color: "var(--text-main)",
       }}
     >
+      {/* custom cursor */}
+      <div className="custom-cursor"></div>
+
       {page === "loader" && <LoaderScene onNavigate={handleNavigate} />}
       {page === "home" && <Home section={section} />}
     </div>

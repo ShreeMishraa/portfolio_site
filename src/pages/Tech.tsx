@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useTransform, animate, useScroll, useTransform as useScrollTransform } from "framer-motion";
 
 // ============ SKILLS CLOUD ============
-// ⚠️ DO NOT TOUCH THIS PART (UNCHANGED)
 interface Skill {
   name: string;
   size: "sm" | "md" | "xl" | "2xl" | "lg";
@@ -10,34 +9,34 @@ interface Skill {
 
 const skills: Skill[] = [
   { name: "Node.js", size: "2xl" },
-  { name: "CSS", size: "sm" },
+  { name: "Tailwind CSS", size: "lg" },
   { name: "React", size: "xl" },
-  { name: "Git", size: "md" },
+  { name: "Git/Github", size: "md" },
   { name: "Express", size: "2xl" },
-  { name: "HTML", size: "sm" },
+  { name: "C/C++", size: "lg" },
   { name: "Figma", size: "2xl" },
   { name: "Redux", size: "lg" },
   { name: "REST API", size: "2xl" },
   { name: "TypeScript", size: "lg" },
-  { name: "Vue", size: "sm" },
+  { name: "Power BI", size: "sm" },
   { name: "JavaScript", size: "xl" },
-  { name: "Sass", size: "md" },
+  { name: "GSAP", size: "md" },
   { name: "Framer Motion", size: "xl" },
   { name: "Python", size: "xl" },
   { name: "Next.js", size: "lg" },
   { name: "Docker", size: "xl" },
   { name: "MongoDB", size: "lg" },
   { name: "AWS", size: "2xl" },
-  { name: "Tailwind", size: "lg" },
+  { name: "Scikit-learn", size: "lg" },
   { name: "Three.js", size: "xl" },
   { name: "Firebase", size: "lg" },
   { name: "PostgreSQL", size: "2xl" },
   { name: "Vite", size: "lg" },
-  { name: "GraphQL", size: "xl" },
+  { name: "JWT", size: "xl" },
 ];
 
 const sizeClasses = {
-  sm: "text-[8px] opacity-60",
+  sm: "text-[6px] opacity-60",
   md: "text-xs opacity-70",
   lg: "text-sm opacity-80",
   xl: "text-xl font-semibold opacity-95",
@@ -46,8 +45,8 @@ const sizeClasses = {
 
 const SkillsCloud = () => {
   return (
-    <div className="relative w-3xl max-w-3xl mx-auto scale-90">
-      <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 px-8">
+    <div className="relative w-2xl max-w-2xl mx-auto scale-90">
+      <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 px-4">
         {skills.map((skill, index) => (
           <motion.span
             key={skill.name}
@@ -72,7 +71,7 @@ const HandCursor = () => {
     <motion.img
       src="/src/assets/hand.png"
       alt="hand"
-      className="w-14 h-14 select-none"
+      className="w-10 h-10 select-none"
       animate={{ rotate: [0, 18, -10, 18, -10, 0] }}
       transition={{
         duration: 1.2,
@@ -85,7 +84,7 @@ const HandCursor = () => {
   );
 };
 
-// ============ MOUSE FOLLOWER (FIXED TO ONLY TRACK ITS OWN DIV) ============
+// ============ MOUSE FOLLOWER  ============
 const MouseFollower = ({ children, speed = 0.05 }: { children: React.ReactNode; speed?: number }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -181,7 +180,7 @@ const Tech = () => {
   };
 
   const handleEmailClick = () => {
-    window.open("/src/assets/resume.pdf", "_blank");
+    window.open("/src/assets/mishreeResume.pdf", "_blank");
   };
 
   const nameLetters = ["S", "H", "R", "E", "E", " ", " ", "M", "I", "S", "H", "R", "A"];
@@ -257,17 +256,17 @@ const Tech = () => {
 
       {/* ================= SKILLS ================= */}
      <div
-  className="relative z-20 w-full px-6 py-28 flex items-stretch justify-between gap-8 bg-[#487078] overflow-hidden" 
+  className="relative z-20 w-full px-4 py-20 flex items-stretch justify-between gap-4 bg-[#487078] overflow-hidden" 
 >  <div className="absolute inset-0 bg-black/20" />
 
         {/* LEFT */}
         <div className="w-[30%] flex items-center justify-center h-80">
           <motion.div
             onClick={handleEmailClick}
-            className="w-[320px] h-full rounded-3xl bg-white/90 backdrop-blur-md border border-white/20
+            className="w-[320px] h-full rounded-3xl bg-white/80 backdrop-blur-md border border-white/20
                        flex flex-col items-center justify-center cursor-pointer shadow-2xl"
           >
-            <div className="mb-4 text-sm text-zinc-700 bg-zinc-200/70 px-4 py-2 rounded-full">
+            <div className="mb-4 text-sm p-2 font-serif text-zinc-700 bg-zinc-200/70 px-4 py-2 rounded-full">
               click to see my resume
             </div>
 
@@ -290,7 +289,7 @@ const Tech = () => {
                        rounded-3xl bg-white/80 backdrop-blur-md border border-white/20
                        flex flex-col items-center justify-center cursor-grab active:cursor-grabbing shadow-2xl"
           >
-            <div className="mb-6 text-sm text-zinc-700 bg-zinc-200/70 px-4 py-2 rounded-full">
+            <div className="mb-6 text-sm p-2 font-serif text-zinc-700 bg-zinc-200/70 px-4 py-2 rounded-full">
               Drag to see my skills
             </div>
 
