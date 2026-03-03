@@ -1,19 +1,19 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Slider from "react-slick";
 
-import favSongImg from "../assets/favsong.jpg";
+const favSongImg = "/favsong.jpg";
 
-import ach1 from "../assets/ach1.jpeg";
-import ach2 from "../assets/ach2.jpeg";
-import ach3 from "../assets/ach3.jpeg";
+const ach1 = "/ach1.jpeg";
+const ach2 = "/ach2.jpeg";
+const ach3 = "/ach3.jpeg";
 
-import instagramImg from "../assets/instagram.png";
-import githubImg from "../assets/github.jpg";
-import mailImg from "../assets/resume.png";
-import linkedinImg from "../assets/linkedin.png";
-import leetcodeImg from "../assets/leetcode.png";
+const instagramImg = "/instagram.png";
+const githubImg = "/github.jpg";
+const mailImg = "/resume.png";
+const linkedinImg = "/linkedin.png";
+const leetcodeImg = "/leetcode.png";
 
-import handImg from "../assets/hand.png";
+const handImg = "/hand.png";
 
 type CardId = "map" | "social" | "doodle" | "song" | "about" | "drag" | "achiev";
 
@@ -236,7 +236,7 @@ const About: React.FC = () => {
       case "doodle":
         return (
           <div className="absolute inset-0 bg-white rounded-3xl overflow-hidden">
-            <img src="/src/assets/shree.png" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+            <img src="/shree.png" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
           </div>
         );
 

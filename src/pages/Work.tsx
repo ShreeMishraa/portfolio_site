@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-import card1 from "../assets/card1.jpg";
-import card2 from "../assets/card2.jpg";
-import card3 from "../assets/card3.jpg";
-import card4 from "../assets/card4.jpg";
-import card5 from "../assets/card5.jpg";
-import card6 from "../assets/card6.jpg";
+const card1 = "/card1.jpg";
+const card2 = "/card2.jpg";
+const card3 = "/card3.jpg";
+const card4 = "/card4.jpg";
+const card5 = "/card5.jpg";
+const card6 = "/card6.jpg";
 
 type Work = {
   id: number;

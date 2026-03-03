@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../index.css";
 import { motion, useScroll, useTransform } from "framer-motion";
 import NavbarIcons from "./NavbarIcons";
-import bgImage from "../assets/loaderbg.png";
 import type { Page } from "../types";
+
+const bgImage = "/loaderbg.png";
 
 const LoaderScene: React.FC<{ onNavigate?: (to: Page) => void }> = ({ onNavigate }) => {
   const { scrollYProgress } = useScroll();

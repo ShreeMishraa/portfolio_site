@@ -7,10 +7,11 @@ import {
   useAnimationFrame,
   useMotionValue,
 } from "framer-motion";
-import apple from "../assets/apple.png";
-import butterfly from "../assets/butterfly.png";
-import flower from "../assets/flower.png";
 import type { Page } from "../types";
+
+const apple = "/apple.png";
+const butterfly = "/butterfly.png";
+const flower = "/flower.png";
 
 interface NavbarIconsProps {
   onNavigate?: (to: Page) => void;

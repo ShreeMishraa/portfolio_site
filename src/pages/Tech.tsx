@@ -69,7 +69,7 @@ const SkillsCloud = () => {
 const HandCursor = () => {
   return (
     <motion.img
-      src="/src/assets/hand.png"
+      src="/hand.png"
       alt="hand"
       className="w-10 h-10 select-none"
       animate={{ rotate: [0, 18, -10, 18, -10, 0] }}
@@ -178,7 +178,7 @@ const Tech = () => {
   };
 
   const handleEmailClick = () => {
-    window.open("/src/assets/mishreeResume.pdf", "_blank");
+    window.open("/mishreeResume.pdf", "_blank");
   };
 
   const nameLetters = ["S", "H", "R", "E", "E", " ", " ", "M", "I", "S", "H", "R", "A"];
@@ -190,7 +190,7 @@ const Tech = () => {
       <motion.div
         ref={heroRef}
         className="fixed top-0 left-0 w-full h-screen flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: "url('/src/assets/hero-bg.jpg')" } as any}
+        style={{ backgroundImage: "url('/hero-bg.jpg')" } as any}
       >
         <div className="absolute inset-0 bg-black/40" />
 
@@ -269,7 +269,7 @@ const Tech = () => {
             </div>
 
             <MouseFollower speed={0.08}>
-              <img src="/src/assets/resume.png" alt="envelope" className="w-12 h-12 object-contain" />
+              <img src="/resume.png" alt="envelope" className="w-12 h-12 object-contain" />
             </MouseFollower>
           </motion.div>
         </div>
@@ -292,7 +292,7 @@ const Tech = () => {
             </div>
 
             <MouseFollower speed={0.05}>
-              <img src="/src/assets/closed-hand.png" alt="cursor hand" className="w-12 h-12 object-contain" />
+              <img src="/closed-hand.png" alt="cursor hand" className="w-12 h-12 object-contain" />
             </MouseFollower>
           </motion.div>
         </div>
