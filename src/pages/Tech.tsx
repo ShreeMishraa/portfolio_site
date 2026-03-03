@@ -256,8 +256,8 @@ const Tech = () => {
 
       {/* ================= SKILLS ================= */}
      <div
-  className="relative z-20 w-full px-4 py-20 flex items-stretch justify-between gap-4 bg-[#487078] overflow-hidden" 
->  <div className="absolute inset-0 bg-black/20" />
+  className="relative z-20 w-full px-4 py-20 flex items-stretch justify-between gap-4 bg-[#294045] overflow-hidden" 
+>  
 
         {/* LEFT */}
         <div className="w-[30%] flex items-center justify-center h-80">

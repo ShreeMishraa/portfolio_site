@@ -111,8 +111,8 @@ export default function WorksSection() {
     <section className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
       
       {/* Background */}
-      <div className="absolute inset-0 bg-[#487078]" />
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0 bg-[#294045]" />
+      
 
       {/* Content */}
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
