@@ -319,9 +319,20 @@ const About: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    if (!formData.email || !formData.details) return;
-    setSent(true);
-  };
+  if (!formData.email || !formData.details) return;
+
+  const subject = `Portfolio Contact from ${formData.firstName} ${formData.lastName}`;
+  const body =
+`Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+
+Message:
+${formData.details}`;
+
+  window.location.href = `mailto:shreemishra58@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  setSent(true);
+};
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
