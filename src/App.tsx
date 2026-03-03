@@ -51,7 +51,7 @@ const App: React.FC = () => {
     <div
       className={`
         min-h-screen w-full
-        transition-colors duration-[1200ms] ease-in-out
+        transition-colors duration-1200 ease-in-out
         ${hasScrolled ? "theme-deep" : "theme-alive"}
       `}
       style={{

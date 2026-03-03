@@ -214,13 +214,13 @@ const About: React.FC = () => {
               Social accounts
             </div>
             <div className="absolute bottom-0 left-0 right-0 h-40">
-              <a href="https://instagram.com/its_mishree__" target="_blank" rel="noopener noreferrer" className="absolute left-1 -bottom-1 rotate-[25deg]">
+              <a href="https://instagram.com/its_mishree__" target="_blank" rel="noopener noreferrer" className="absolute left-1 -bottom-1 rotate-25">
                 <img src={instagramImg} className="w-16 hover:scale-110 transition" draggable={false} />
               </a>
-              <a href="https://github.com/ShreeMishraa" target="_blank" rel="noopener noreferrer" className="absolute left-14 bottom-0 rotate-[-12deg]">
+              <a href="https://github.com/ShreeMishraa" target="_blank" rel="noopener noreferrer" className="absolute left-14 bottom-0 -rotate-12">
                 <img src={githubImg} className="w-10 hover:scale-110 transition" draggable={false} />
               </a>
-              <a href="mailto:shreemishra58@gmail.com" className="absolute left-28 bottom-0 rotate-[10deg]">
+              <a href="mailto:shreemishra58@gmail.com" className="absolute left-28 bottom-0 rotate-10">
                 <img src={mailImg} className="w-14 hover:scale-110 transition" draggable={false} />
               </a>
               <a href="https://www.linkedin.com/in/shreemishraa/" target="_blank" rel="noopener noreferrer" className="absolute right-2 bottom-0">

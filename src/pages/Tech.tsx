@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useMotionValue, useTransform, animate, useScroll, useTransform as useScrollTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate, useScroll } from "framer-motion";
 
 // ============ SKILLS CLOUD ============
 interface Skill {
@@ -155,13 +155,11 @@ const Tech = () => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const { scrollYProgress } = useScroll({
+  useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
-  const heroRotateX = useScrollTransform(scrollYProgress, [0, 1], [0, -25]);
-  const heroScale = useScrollTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
   const dragDistance = useTransform([x, y], ([lx, ly]) => {
     return Math.sqrt((lx as number) ** 2 + (ly as number) ** 2);

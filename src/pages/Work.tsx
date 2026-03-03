@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import card1 from "../assets/card1.jpg";
 import card2 from "../assets/card2.jpg";
@@ -133,7 +133,7 @@ export default function WorksSection() {
               return (
                 <div
                   key={work.id}
-                  className="relative flex-shrink-0"
+                  className="relative shrink-0"
                   style={{
                     width: CARD_W,
                     marginLeft: index === 0 ? 0 : -OVERLAP,
@@ -163,7 +163,7 @@ export default function WorksSection() {
                         className="absolute inset-0 w-full h-full object-cover"
                       />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
 
                       {!isExpanded && (
                         <div className="absolute bottom-6 left-6 right-6">
